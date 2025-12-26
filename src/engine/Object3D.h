@@ -7,17 +7,10 @@
 
 
 // Enum for different material types
-//we use thos for now for simplicity, they can be extened later
-enum class MaterialType {
-    Opaque,
-    Reflective,
-    Refractive
-};
 
 class Object3D{
 public:
     glm::vec3 color={1.0f,1.0f,1.0f}; //default white color
-    MaterialType material=MaterialType::Opaque; //default material is opaque - Nadav's note: i think this can be removed...
 
     float reflectiveConst=0.0f; // by default no reflection
     float refractiveConst=0.0f; // by default no refraction

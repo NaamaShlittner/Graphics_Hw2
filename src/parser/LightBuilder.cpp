@@ -40,7 +40,8 @@ std::unique_ptr<LightSource> LightBuilder::build() {
         return std::make_unique<DirectionalLight>(direction, intensity);
     } else if (type == LightType::Spotlight) {
         return std::make_unique<Spotlight>(position, direction, intensity, cutoffAngle);
-    } else {
-        throw std::runtime_error("Unknown light type");
+    } else if (type == LightType::None) {
+        throw std::runtime_error("Light type not set");
     }
+    throw std::runtime_error("Unknown light type");
 }
