@@ -16,53 +16,22 @@ public:
     LightBuilder() = default;
 
     // Set light type
-    LightBuilder& setDirectional() {
-        type = LightType::Directional;
-        return *this;
-    }
+    LightBuilder& setDirectional();
 
-    LightBuilder& setSpotlight() {
-        type = LightType::Spotlight;
-        return *this;
-    }
+    LightBuilder& setSpotlight();
 
     // Set common properties
-    LightBuilder& setDirection(const glm::vec3& dir) {
-        direction = dir;
-        return *this;
-    }
+    LightBuilder& setDirection(const glm::vec3& dir);
 
-    LightBuilder& setIntensity(const glm::vec3& intens) {
-        intensity = intens;
-        return *this;
-    }
+    LightBuilder& setIntensity(const glm::vec3& intens);
 
     // Spotlight-specific properties
-    LightBuilder& setPosition(const glm::vec3& pos) {
-        if (type != LightType::Spotlight) {
-            throw std::runtime_error("Position can only be set for Spotlight type");
-        }
-        position = pos;
-        return *this;
-    }
+    LightBuilder& setPosition(const glm::vec3& pos);
 
-    LightBuilder& setCutoffAngle(float angle) {
-        if (type != LightType::Spotlight) {
-            throw std::runtime_error("Cutoff angle can only be set for Spotlight type");
-        }
-        cutoffAngle = angle;
-        return *this;
-    }
+    LightBuilder& setCutoffAngle(float angle);
 
     // Build the light
-    std::unique_ptr<LightSource> build() {
-        if (type == LightType::Directional) {
-            return std::make_unique<DirectionalLight>(direction, intensity);
-        } else if (type == LightType::Spotlight) {
-            return std::make_unique<Spotlight>(position, direction, intensity, cutoffAngle);
-        }
-        return nullptr;
-    }
+    std::unique_ptr<LightSource> build();
 
 private:
     LightType type = LightType::Directional;
