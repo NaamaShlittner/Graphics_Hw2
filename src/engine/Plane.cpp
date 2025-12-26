@@ -1,7 +1,7 @@
 #include "Plane.h"
 
-Hit Plane::intersect(const Ray& ray) {
+std::optional<Hit> Plane::intersect(const Ray& ray) {
     Hit hit;
-    // כרגע: תמיד "לא פגעתי"
-    return hit;
+    // for now- not hitting anything
+    return std::nullopt;
 }

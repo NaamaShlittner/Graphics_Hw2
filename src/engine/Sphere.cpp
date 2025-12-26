@@ -1,7 +1,9 @@
 #include "Sphere.h"
 
-Hit Sphere::intersect(const Ray& ray) {
+
+// returns a hit object if the ray intersects the sphere, std::nullopt otherwise
+std::optional<Hit> Sphere::intersect(const Ray& ray) {
     Hit hit;
-    //for now- not hitting anything
-    return hit;
+
+    return std::nullopt; // for now- no intersection until implemented
 }

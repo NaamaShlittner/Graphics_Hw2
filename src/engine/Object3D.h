@@ -17,9 +17,12 @@ enum class MaterialType {
 class Object3D{
 public:
     glm::vec3 color={1.0f,1.0f,1.0f}; //default white color
-    MaterialType material=MaterialType::Opaque; //default material is opaque
+    MaterialType material=MaterialType::Opaque; //default material is opaque - Nadav's note: i think this can be removed...
+
+    float reflectiveConst=0.0f; // by default no reflection
+    float refractiveConst=0.0f; // by default no refraction
 
     virtual ~Object3D() = default;
 
-    virtual Hit intersect(const Ray& ray)=0;//0 means it's a pure virtual function- makes the class abstract
+    virtual std::optional<Hit> intersect(const Ray& ray)=0;//0 return std::nullopt if no hit, Hit object otherwise
 };

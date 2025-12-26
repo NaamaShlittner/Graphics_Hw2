@@ -11,5 +11,5 @@ public:
     Sphere(const glm::vec3& c, float r) 
         : center(c), radius(r) {}
 
-    Hit intersect(const Ray& ray) override;
+    std::optional<Hit> intersect(const Ray& ray) override;
 };

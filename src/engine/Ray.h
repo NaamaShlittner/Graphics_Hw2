@@ -6,10 +6,7 @@ struct Ray {
     glm::vec3 dir{0.0f, 0.0f, -1.0f}; // direction, default pointing in -z - standard camera direction
     int depth = 0;// recursion depth for reflection/refraction rays
     //depth = 0 - ray from camera
-    //depth = 1 - ray after first reflection/refraction
-    //and so on...
-    //we will limit the max depth in the raytracer to avoid infinite recursion
-    // if (depth > MAX_DEPTH) we stop tracing further rays
+    //depth >= 1 - ray after first reflection/refraction
 
     Ray() = default;
     Ray(const glm::vec3& o, const glm::vec3& d, int dep = 0)
