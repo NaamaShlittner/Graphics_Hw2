@@ -25,6 +25,11 @@ Object3DBuilder& Object3DBuilder::setRefractiveConst(float refractiveConst) {
     return *this;
 }
 
+Object3DBuilder& Object3DBuilder::setShininess(float shininess) {
+    this->shininess = shininess;
+    return *this;
+}
+
 Object3DBuilder& Object3DBuilder::setCenter(const glm::vec3& center) {
     if (this->type != ObjectType::Sphere) {
         throw std::runtime_error("Center can only be set for sphere type");
@@ -63,12 +68,14 @@ std::unique_ptr<Object3D> Object3DBuilder::build() {
         sphere->color = color;
         sphere->reflectiveConst = reflectiveConst;
         sphere->refractiveConst = refractiveConst;
+        sphere->shininess = shininess;
         return sphere;
     } else if (type == ObjectType::Plane) {
         auto plane = std::make_unique<Plane>(normal, d);
         plane->color = color;
         plane->reflectiveConst = reflectiveConst;
         plane->refractiveConst = refractiveConst;
+        plane->shininess = shininess;
         return plane;
     } else if (type == ObjectType::None) {
         throw std::runtime_error("Object type not set");

@@ -27,6 +27,10 @@ LightBuilder& LightBuilder::setPosition(const glm::vec3& pos) {
     return *this;
 }
 
+bool LightBuilder::isSpotlight() const {
+    return type == LightType::Spotlight;
+}
+
 LightBuilder& LightBuilder::setCutoffAngle(float angle) {
     if (this->type != LightType::Spotlight) {
         throw std::runtime_error("Cutoff angle can only be set for spotlight type");

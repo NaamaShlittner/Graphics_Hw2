@@ -8,7 +8,5 @@ public:
     glm::vec3 intensity{1.0f,1.0f,1.0f}; //default white light
     ~LightSource() = default;
     
-
-
 private:
 };
