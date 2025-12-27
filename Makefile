@@ -27,7 +27,7 @@ else
 endif
 
 # Source and object files
-SRC_FILES = $(wildcard ${workspaceFolder}/src/*.cpp)
+SRC_FILES = $(wildcard ${workspaceFolder}/src/*.cpp) $(wildcard ${workspaceFolder}/src/parser/*.cpp) $(wildcard ${workspaceFolder}/src/engine/*.cpp) 
 OBJ_FILES = $(patsubst ${workspaceFolder}/src/%.cpp, ${workspaceFolder}/bin/%.o, $(SRC_FILES)) ${workspaceFolder}/bin/glad.o
 
 # Rule to compile .o files from .cpp files
@@ -70,3 +70,8 @@ copy_res_l:
 
 # Parallel build (add -jN option to run with N jobs)
 .PHONY: all copy_res_m copy_res_w
+
+# cleans all compiled files
+clean:
+	@echo "Cleaning up..."
+	rm -rf $(patsubst ${workspaceFolder}/src/%.cpp, ${workspaceFolder}/bin/%.o, $(SRC_FILES)) ${workspaceFolder}/bin/glad.o ${workspaceFolder}/bin/main

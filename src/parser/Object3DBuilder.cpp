@@ -64,7 +64,7 @@ Object3DBuilder& Object3DBuilder::setD(float d) {
 
 std::unique_ptr<Object3D> Object3DBuilder::build() {
     if (type == ObjectType::Sphere) {
-        auto sphere = std::make_unique<Sphere>(radius, center);
+        auto sphere = std::make_unique<Sphere>(center, radius);
         sphere->color = color;
         sphere->reflectiveConst = reflectiveConst;
         sphere->refractiveConst = refractiveConst;
