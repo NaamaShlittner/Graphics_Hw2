@@ -20,3 +20,7 @@ glm::vec3 Spotlight::intensityAt(const glm::vec3& P) const
 
     return intensity*(cosTheta);
 }
+
+float Spotlight::maxShadowDistance(const glm::vec3& P) const {
+    return glm::length(position - P);
+}

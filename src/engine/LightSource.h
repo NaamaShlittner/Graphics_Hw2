@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <limits>
 
 class LightSource
 {
@@ -13,6 +14,10 @@ public:
 
     //intensity at point P
     virtual glm::vec3 intensityAt(const glm::vec3& P) const = 0;
+
+    virtual float maxShadowDistance(const glm::vec3& P) const {
+        return std::numeric_limits<float>::infinity(); // directional default
+    }
 
 private:
 };
