@@ -11,7 +11,7 @@ public:
     Plane() = default;
 
     Plane(const glm::vec3& n, float dVal)
-        : normal(n), d(dVal) {}
+        : normal(glm::normalize(n)), d(dVal) {}
 
     std::optional<Hit> intersect(const Ray& ray) override;
 };

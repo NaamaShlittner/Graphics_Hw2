@@ -10,5 +10,5 @@ struct Ray {
 
     Ray() = default;
     Ray(const glm::vec3& o, const glm::vec3& d, int dep = 0)
-        : origin(o), dir(d), depth(dep) {}
+        : origin(o), dir(glm::normalize(d)), depth(dep) {}
 };
