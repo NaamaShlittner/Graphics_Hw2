@@ -36,21 +36,64 @@ bool RayTracer::isInShadow(const glm::vec3& point, const std::vector<std::shared
 glm::vec3 RayTracer::shadeHit(const Ray& ray, const std::vector<std::shared_ptr<Object3D>>& objects, const glm::vec3& ambientLight, const std::vector<std::shared_ptr<LightSource>>& lightSorces, int maxDepth) const {
     auto traceResult = traceClosestHit(ray, objects);
 
-    //no hit found, return background color
-    if(!traceResult) {
-        return glm::vec3(0.0f, 0.0f, 0.0f);// Background color
+    // no hit found
+    if (!traceResult) {
+        return glm::vec3(0.0f);
     }
-    const glm::vec3& normal = traceResult->hit.normal;
-    const glm::vec3& materialDiffuse = traceResult->object->color;
-    glm::vec3 baseColor = traceResult->object->color * ambientLight;
-    
-    glm::vec3 diffusedColor;
+
+    const auto& obj = traceResult->object;
+    const glm::vec3 P = traceResult->hit.hitPoint;
+
+    glm::vec3 N = glm::normalize(traceResult->hit.normal);
+
+    // Make sure normal faces against incoming ray
+    if (glm::dot(N, ray.dir) > 0.0f) {
+        N = -N;
+    }
+    glm::vec3 V = glm::normalize(-ray.dir);//view direction
+
+    const glm::vec3 Ka = obj->color;
+    const glm::vec3 Kd = obj->color;
+    const glm::vec3 Ks = obj->specularConst;
+    const float n  = obj->shininess;
+    const glm::vec3 Ie = obj->emission;
+
+    //emission + ambient
+    glm::vec3 color = Ie + Ka * ambientLight;
+
+    // Lighting loop
     for (const auto& light : lightSorces) {
-        diffusedColor += materialDiffuse * light->intensityAt(traceResult->hit.hitPoint) *
-            std::max(glm::dot(normal, glm::normalize(light->directionFrom(traceResult->hit.hitPoint))), 0.0f);
+        if (isInShadow(P, objects, *light)) {
+            continue;
+        }
+
+        glm::vec3 L = glm::normalize(light->directionFrom(P));// from P to light
+        glm::vec3 Ii = light->intensityAt(P);// light intensity at P (RGB)
+
+        //Diffuse
+        float NdotL = std::max(glm::dot(N, L), 0.0f);
+        glm::vec3 diffuse = Kd * NdotL;
+
+        //Specular
+        glm::vec3 R = glm::reflect(-L, N);
+        float VdotR = std::max(glm::dot(V, R), 0.0f);
+        float specFactor = std::pow(VdotR, n);
+        glm::vec3 specular = Ks * specFactor;
+
+        color += (diffuse + specular)* Ii;
     }
 
+    //Reflection
+    if (obj->reflectiveConst > 0.0f && ray.depth < maxDepth) {
+        const float EPS = 1e-4f;
+        glm::vec3 reflDir = glm::reflect(ray.dir, N);
+        Ray reflRay(P + EPS * reflDir, reflDir, ray.depth + 1);
+        glm::vec3 reflectedColor = shadeHit(reflRay, objects, ambientLight, lightSorces, maxDepth);
 
-    return baseColor+defusedColor;
+        color += obj->reflectiveConst * reflectedColor;
+    }
+
+    color = glm::clamp(color, glm::vec3(0.0f), glm::vec3(1.0f));
+    return color;
 }
 

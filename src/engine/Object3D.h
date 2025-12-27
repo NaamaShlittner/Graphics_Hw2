@@ -16,7 +16,8 @@ public:
     float reflectiveConst=0.0f; // by default no reflection
     float refractiveConst=0.0f; // by default no refraction
     float shininess=32.0f; // default shininess
-
+    glm::vec3 specularConst={0.7f,0.7f,0.7f}; //default specular color
+    glm::vec3 emission={0.0f,0.0f,0.0f}; //default no emission
     virtual ~Object3D() = default;
 
     virtual std::optional<Hit> intersect(const Ray& ray)=0;//0 return std::nullopt if no hit, Hit object otherwise
