@@ -1,3 +1,4 @@
+#include "Parser.h"
 #include "SceneBuilder.h"
 #include "LightBuilder.h"
 #include "CameraBuilder.h"
@@ -18,7 +19,7 @@ std::unique_ptr<Scene> buildFromFile(const std::string &filename)
     }
     std::vector<std::shared_ptr<Object3DBuilder>> objectBuilders;
     std::vector<std::shared_ptr<LightBuilder>> lightBuilders;
-    CameraBuilder cameraBuilder = buildCameraFromFile(file);
+    CameraBuilder cameraBuilder = parseCamera(file);
     glm::vec3 ambiantLight = parseAmbiantLight(file);
 
     parseObjectsAndLights(file, objectBuilders, lightBuilders);
@@ -47,7 +48,7 @@ std::unique_ptr<Scene> buildFromFile(const std::string &filename)
     return sceneBuilder.build();
 }
 
-CameraBuilder buildCameraFromFile(std::ifstream &file)
+CameraBuilder parseCamera(std::ifstream &file)
 {
     CameraBuilder cameraBuilder = CameraBuilder();
 
@@ -104,7 +105,7 @@ glm::vec3 parseAmbiantLight(std::ifstream &file)
         throw std::runtime_error("Invalid scene file: missing ambiant light data");
     }
 
-    // Parse the line in this format: a <r> <g> <b>
+    // Parse the line in this format: a <r> <g> <b> <c>
     std::istringstream iss(line);
     if (!(iss >> lineType >> r >> g >> b >> c) || lineType != 'a' || c != 1.0f)
     {
@@ -132,7 +133,7 @@ void parseObjectsAndLights(std::ifstream &file,
         {
             throw std::runtime_error("Invalid scene file: malformed camera line");
         }
-        if (lineType == '0' || lineType == 'r' || lineType == 't')
+        if (lineType == 'o' || lineType == 'r' || lineType == 't')
         {
             // Object line
             auto objBuilder = std::make_shared<Object3DBuilder>();
@@ -180,7 +181,7 @@ void parseObjectsAndLights(std::ifstream &file,
             {
                 auto lightBuilder = std::make_shared<LightBuilder>();
                 lightBuilder->setDirection(glm::vec3(x, y, z));
-                if (w = 0.0f)
+                if (w == 0.0f)
                     lightBuilder->setDirectional();
                 else
                 {
@@ -216,10 +217,6 @@ void parseObjectsAndLights(std::ifstream &file,
                 lightBuilders[lightsColored]->setIntensity(glm::vec3(x, y, z));
                 lightsColored++;
             }
-        }
-        else
-        {
-            throw std::runtime_error("Invalid scene file: unexpected line type in objects/lights section");
         }
     }
 }
