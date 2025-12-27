@@ -23,6 +23,8 @@ public:
 
     Object3DBuilder &setRefractiveConst(float refractiveConst);
 
+    Object3DBuilder &setShininess(float shininess);
+
     // Sphere-specific properties
     Object3DBuilder &setCenter(const glm::vec3 &center);
 
@@ -46,6 +48,7 @@ private:
     glm::vec3 color{1.0f, 1.0f, 1.0f};
     float reflectiveConst{0.0f};
     float refractiveConst{0.0f};
+    float shininess{32.0f};
     // Sphere-specific
     float radius{1.0f};
     glm::vec3 center{0.0f, 0.0f, 0.0f};

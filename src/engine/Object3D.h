@@ -15,6 +15,7 @@ public:
 
     float reflectiveConst=0.0f; // by default no reflection
     float refractiveConst=0.0f; // by default no refraction
+    float shininess=32.0f; // default shininess
 
     virtual ~Object3D() = default;
 

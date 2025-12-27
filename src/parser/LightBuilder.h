@@ -26,6 +26,8 @@ public:
 
     LightBuilder &setCutoffAngle(float angle);
 
+    bool isSpotlight() const;
+
     // Build the light
     std::unique_ptr<LightSource> build();
 
