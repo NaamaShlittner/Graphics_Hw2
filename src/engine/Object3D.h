@@ -11,6 +11,7 @@
 class Object3D{
 public:
     glm::vec3 color={1.0f,1.0f,1.0f}; //default white color
+    float shininess=10.0f; //default shininess
 
     float reflectiveConst=0.0f; // by default no reflection
     float refractiveConst=0.0f; // by default no refraction
