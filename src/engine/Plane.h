@@ -10,6 +10,7 @@ public:
 
     Plane() = default;
 
+    // we might need to also normalize the d term?
     Plane(const glm::vec3& n, float dVal)
         : normal(glm::normalize(n)), d(dVal) {}
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "engine/Ray.h"
 
 class Camera
 {
@@ -11,7 +12,7 @@ public:
            glm::vec3 forwardVector = glm::vec3(0.0f, 0.0f, -1.0f),
             float distanceToProjectionPlane = 1.0f)
         : screenWidth(screenWidth), screenHeight(screenHeight),
-          position(position), upVector(upVector), forwardVector(forwardVector), distanceToProjectionPlane(distanceToProjectionPlane) {};
+          position(position), upVector(glm::normalize(upVector)), forwardVector(glm::normalize(forwardVector)), distanceToProjectionPlane(distanceToProjectionPlane) {};
 
     ~Camera() = default;
 
@@ -21,6 +22,7 @@ public:
     glm::vec3 getUpVector() const { return upVector; }
     glm::vec3 getForwardVector() const { return forwardVector; }
     float getDistanceToProjectionPlane() const { return distanceToProjectionPlane; }
+    Ray generateRay(int pixelX, int pixelY, int imageWidth, int imageHeight) const;
 
 private:
     float screenWidth = 800.0f;

@@ -69,7 +69,15 @@ copy_res_l:
 	mkdir -p ${workspaceFolder}/bin/res && cp -rf ${workspaceFolder}/src/res/* ${workspaceFolder}/bin/res
 
 # Parallel build (add -jN option to run with N jobs)
-.PHONY: all copy_res_m copy_res_w
+.PHONY: all copy_res_m copy_res_w clean_objs rebuild
+
+# remove object files only (fast, safe) without touching the executable
+clean_objs:
+	@echo "Removing object files..."
+	@rm -f $(OBJ_FILES)
+
+# shortcut: clean object files then build
+rebuild: clean_objs build
 
 # cleans all compiled files
 clean:
