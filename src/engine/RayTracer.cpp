@@ -83,7 +83,7 @@ glm::vec3 RayTracer::shadeHit(const Ray& ray, const std::vector<std::shared_ptr<
     //emission + ambient
     glm::vec3 color = Ie + Ka * ambientLight;
 
-    printf("color at hit point after emission and ambient: (%.2f, %.2f, %.2f)\n", color.r, color.g, color.b);
+    // printf("color at hit point after emission and ambient: (%.2f, %.2f, %.2f)\n", color.r, color.g, color.b);
 
     // Lighting loop
     for (const auto& light : lightSources) {
@@ -105,10 +105,10 @@ glm::vec3 RayTracer::shadeHit(const Ray& ray, const std::vector<std::shared_ptr<
         float specFactor = std::pow(VdotR, n);
         glm::vec3 specular = Ks * specFactor;
         
-        printf("color += (diffuse + specular) * Ii where diffuse: (%.2f, %.2f, %.2f), specular: (%.2f, %.2f, %.2f), Ii: (%.2f, %.2f, %.2f)\n",
-               diffuse.r, diffuse.g, diffuse.b,
-               specular.r, specular.g, specular.b,
-               Ii.r, Ii.g, Ii.b);
+        // printf("color += (diffuse + specular) * Ii where diffuse: (%.2f, %.2f, %.2f), specular: (%.2f, %.2f, %.2f), Ii: (%.2f, %.2f, %.2f)\n",
+            //    diffuse.r, diffuse.g, diffuse.b,
+            //    specular.r, specular.g, specular.b,
+            //    Ii.r, Ii.g, Ii.b);
         color += (diffuse + specular)* Ii;
     }
 
@@ -123,7 +123,7 @@ glm::vec3 RayTracer::shadeHit(const Ray& ray, const std::vector<std::shared_ptr<
     }
 
     color = glm::clamp(color, glm::vec3(0.0f), glm::vec3(1.0f));
-    printf("final color at hit point: (%.2f, %.2f, %.2f)\n", color.r, color.g, color.b);
+    // printf("final color at hit point: (%.2f, %.2f, %.2f)\n", color.r, color.g, color.b);
     return color;
 }
 
@@ -141,7 +141,7 @@ std::vector<unsigned char> RayTracer::renderImage() {
             image[index + 1] = static_cast<unsigned char>(glm::clamp((std::round(color.g * 255.0f)), 0.f, 255.f));
             image[index + 2] = static_cast<unsigned char>(glm::clamp((std::round(color.b * 255.0f)), 0.f, 255.f));
             image[index + 3] = 255; // Alpha channel
-            printf("Rendered pixel (%d, %d): Color(%d, %d, %d, %d)\n", x, y, image[index], image[index + 1], image[index + 2], image[index + 3]);
+            // printf("Rendered pixel (%d, %d): Color(%d, %d, %d, %d)\n", x, y, image[index], image[index + 1], image[index + 2], image[index + 3]);
         }
     }
 

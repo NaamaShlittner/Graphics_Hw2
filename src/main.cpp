@@ -6,8 +6,8 @@
 // default: no debug info
 bool debug = false;
 const int MAX_RECURSION_DEPTH = 0;
-const int SCREEN_PIXEL_WIDTH = 10;
-const int SCREEN_PIXEL_HEIGHT = 10;
+const int SCREEN_PIXEL_WIDTH = 1000;
+const int SCREEN_PIXEL_HEIGHT = 1000;
 
 void printParsingDebugInfo(const Scene &scene)
 {
@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
         RayTracer rayTracer(*scene.get(), SCREEN_PIXEL_WIDTH, SCREEN_PIXEL_HEIGHT, MAX_RECURSION_DEPTH);
         //render image
         std::vector<unsigned char> image = rayTracer.renderImage();
+
+        // we need to save the rendered image
     }
     catch (const std::exception &e)
     {

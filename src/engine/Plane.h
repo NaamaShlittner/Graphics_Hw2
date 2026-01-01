@@ -10,9 +10,8 @@ public:
 
     Plane() = default;
 
-    // we might need to also normalize the d term?
-    Plane(const glm::vec3& n, float dVal)
-        : normal(glm::normalize(n)), d(dVal) {}
+    // normalize the normal and scale d by the same factor so the plane stays the same
+    Plane(const glm::vec3& n, float dVal);
 
     std::optional<Hit> intersect(const Ray& ray) override;
 };
