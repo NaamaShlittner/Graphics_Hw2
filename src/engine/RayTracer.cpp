@@ -74,8 +74,8 @@ glm::vec3 RayTracer::shadeHit(const Ray& ray, const std::vector<std::shared_ptr<
     }
     glm::vec3 V = glm::normalize(-ray.dir);//view direction
 
-    const glm::vec3 Ka = obj->color;
-    const glm::vec3 Kd = obj->color;
+    const glm::vec3 Ka = obj->ColorAtPoint(P);
+    const glm::vec3 Kd = obj->ColorAtPoint(P);
     const glm::vec3 Ks = obj->specularConst;
     const float n  = obj->shininess;
     const glm::vec3 Ie = obj->emission;

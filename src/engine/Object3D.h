@@ -20,4 +20,5 @@ public:
     virtual ~Object3D() = default;
 
     virtual std::optional<Hit> intersect(const Ray& ray)=0;//0 return std::nullopt if no hit, Hit object otherwise
+    virtual glm::vec3 ColorAtPoint(const glm::vec3& point)=0; // get color at a specific point on the object
 };

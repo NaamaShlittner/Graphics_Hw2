@@ -31,5 +31,5 @@ CameraBuilder& CameraBuilder::setDistanceToProjectionPlane(float distance) {
 }
 
 std::unique_ptr<Camera> CameraBuilder::build() {
-    return std::make_unique<Camera>(screenWidth, screenHeight, position, upVector, forwardVector);
+    return std::make_unique<Camera>(screenWidth, screenHeight, position, upVector, forwardVector, distanceToProjectionPlane);
 }

@@ -12,4 +12,10 @@ public:
         : center(c), radius(r) {}
 
     std::optional<Hit> intersect(const Ray& ray) override;
+    glm::vec3 ColorAtPoint(const glm::vec3& point) override;
+
+    bool missed = false;
+    bool inside = false;
+    bool bothNegative = false;
+    int hitCount = 0;
 };
