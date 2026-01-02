@@ -3,6 +3,8 @@
 #include <iostream>
 #include "engine/RayTracer.h"
 #include "stb/stb_image_write.h"
+#include "engine/Sphere.h"
+#include "engine/Plane.h"
 
 // default: no debug info
 bool debug = false;
@@ -25,6 +27,10 @@ void printParsingDebugInfo(const Scene &scene)
     for (size_t i = 0; i < scene.objs.size(); ++i)
     {
         const auto &obj = scene.objs[i];
+        if (!obj) {
+            printf("Object %zu is NULL!\n", i + 1);
+            continue;
+        }
         if (dynamic_cast<Plane*>(obj.get()))
         {
             printf("Object %zu is a Plane.\n", i + 1);
@@ -87,8 +93,6 @@ int main(int argc, char *argv[])
                                      4, // RGBA components
                                      image.data(), 
                                      SCREEN_PIXEL_WIDTH * 4); // stride
-
-        rayTracer.~RayTracer(); // explicitly call destructor to release resources early
         
         if (success) {
             std::cout << "Image saved successfully to " << outputFilename << std::endl;

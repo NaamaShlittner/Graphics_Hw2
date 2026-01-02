@@ -5,6 +5,8 @@
 #include <limits>
 #include <algorithm>
 
+const float REFRACTION_INX_AIR_2_MAT = 1.0f / 2.6f;
+
 RayTracer::RayTracer(const Scene &scene, int screenPixelWidth, int screenPixelHeight, int maxRecursionDepth) : scene(scene), screenPixelWidth(screenPixelWidth), screenPixelHeight(screenPixelHeight), maxRecursionDepth(maxRecursionDepth)
 {
 }
@@ -141,7 +143,7 @@ glm::vec3 RayTracer::shadeHit(const Ray &ray, const std::vector<std::shared_ptr<
         if (ray.depth < maxDepth)
         {
             const float EPS = 1e-4f;
-            glm::vec3 refrDir = glm::refract(ray.dir, N, 1.0f / 2.6f);
+            glm::vec3 refrDir = glm::refract(ray.dir, N, REFRACTION_INX_AIR_2_MAT);
             Ray refrRay(P + EPS * refrDir, refrDir, ray.depth + 1);
             glm::vec3 refractedColor = shadeHit(refrRay, objects, ambientLight, lightSources, maxDepth);
 

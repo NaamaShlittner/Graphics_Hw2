@@ -7,8 +7,8 @@ class Plane : public Object3D {
 public:
     glm::vec3 normal{0.0f, 1.0f, 0.0f};//normal vector
     float d = 0.0f;//constant term in plane equation
-    glm::vec3 u; // tangent vector
-    glm::vec3 v; // bitangent vector
+    glm::vec3 u{1.0f, 0.0f, 0.0f}; // tangent vector
+    glm::vec3 v{0.0f, 0.0f, 1.0f}; // bitangent vector
 
     Plane() = default;
 
