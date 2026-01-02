@@ -42,9 +42,9 @@ glm::vec3 Plane::ColorAtPoint(const glm::vec3& point)
     int checkV = static_cast<int>(floor(glm::dot(localPoint, v) / checkerboardScale));
 
     if ((checkU + checkV) % 2 == 0)
-        return color * glm::vec3(0.5f, 0.5f, 0.5f); // black
+        return color * 0.5f; // darker color
     else
-        return color * glm::vec3(0.9f, 0.9f, 0.9f); // white
+        return color; // brighter color
 }
 
 Plane::Plane(const glm::vec3 &n, float dVal)
@@ -62,7 +62,7 @@ Plane::Plane(const glm::vec3 &n, float dVal)
         d = dVal;
     }
 
-    // create arbitrary u and v vectors on the plane
+    // create arbitrary u and v vectors on the plane (x chooses a helper vector to make sure it's not parallel to the normal)
     glm::vec3 helper =
         (fabs(normal.x) > 0.9f) ? glm::vec3(0,1,0)
                                 : glm::vec3(1,0,0);
