@@ -6,7 +6,7 @@
 
 // default: no debug info
 bool debug = false;
-const int MAX_RECURSION_DEPTH = 0;
+const int MAX_RECURSION_DEPTH = 5;
 const int SCREEN_PIXEL_WIDTH = 1000;
 const int SCREEN_PIXEL_HEIGHT = 1000;
 
@@ -87,6 +87,8 @@ int main(int argc, char *argv[])
                                      4, // RGBA components
                                      image.data(), 
                                      SCREEN_PIXEL_WIDTH * 4); // stride
+
+        rayTracer.~RayTracer(); // explicitly call destructor to release resources early
         
         if (success) {
             std::cout << "Image saved successfully to " << outputFilename << std::endl;
