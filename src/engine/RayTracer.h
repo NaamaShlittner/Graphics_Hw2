@@ -29,7 +29,7 @@ public:
     glm::vec3 shadeHit(const Ray& ray, const std::vector<std::shared_ptr<Object3D>>& objects, const glm::vec3& ambientLight, const std::vector<std::shared_ptr<LightSource>>& lightSorces, int maxDepth) const;
 
     //check if point is in shadow relative to a light source
-    bool isInShadow(const glm::vec3& point, const std::vector<std::shared_ptr<Object3D>>& objects, const LightSource& light) const;
+    bool isInShadow(const glm::vec3& point, const glm::vec3& normal, const std::vector<std::shared_ptr<Object3D>>& objects, const LightSource& light) const;
 
     std::vector<unsigned char> renderImage(); // returns a flat array of pixel colors (RGB)
 

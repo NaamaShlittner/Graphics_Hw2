@@ -23,12 +23,14 @@ glm::vec3 Spotlight::intensityAt(const Hit& hit) const
     float cosTheta = glm::dot(spotDir, toPoint);
     float cosCutoff = glm::cos(cutoffAngle);
 
+    // Check if point is outside the spotlight cone
     if (cosTheta < cosCutoff)
     {
         return glm::vec3(0.0f);
     }
 
-    return intensity * (cosTheta) * glm::dot(hit.normal, direction);
+    // when inside return intensity 
+    return intensity;
 }
 
 float Spotlight::maxShadowDistance(const glm::vec3 &P) const

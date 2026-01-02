@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <glm/glm.hpp>
 
 std::unique_ptr<Scene> buildFromFile(const std::string &filename)
 {

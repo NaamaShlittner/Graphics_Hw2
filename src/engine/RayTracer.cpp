@@ -33,14 +33,15 @@ std::optional<TraceResult> RayTracer::traceClosestHit(const Ray& ray, const std:
 
 /// @brief Determines if a point is in shadow relative to a light source.
 /// @param point The point to test for shadow.
+/// @param normal The surface normal at the point.
 /// @param objects The list of objects that may cast shadows.
 /// @param light The light source to test against.
 /// @return True if the point is in shadow, false otherwise.
-bool RayTracer::isInShadow(const glm::vec3& point, const std::vector<std::shared_ptr<Object3D>>& objects, const LightSource& light) const {
+bool RayTracer::isInShadow(const glm::vec3& point, const glm::vec3& normal, const std::vector<std::shared_ptr<Object3D>>& objects, const LightSource& light) const {
     const float EPS = 1e-4f;//epsilon to avoid self-intersection
     glm::vec3 fromPointToLight = glm::normalize(light.directionFrom(point));
 
-    Ray shadowRay(point + EPS * fromPointToLight, fromPointToLight);//so we don't self-intersect
+    Ray shadowRay(point + EPS * normal, fromPointToLight);//offset along normal to avoid self-intersection
 
     float maxDist = light.maxShadowDistance(point);
         
@@ -87,7 +88,7 @@ glm::vec3 RayTracer::shadeHit(const Ray& ray, const std::vector<std::shared_ptr<
 
     // Lighting loop
     for (const auto& light : lightSources) {
-        if (isInShadow(P, objects, *light)) {
+        if (isInShadow(P, N, objects, *light)) {
             continue;
         }
 

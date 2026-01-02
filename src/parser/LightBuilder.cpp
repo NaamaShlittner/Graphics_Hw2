@@ -31,11 +31,11 @@ bool LightBuilder::isSpotlight() const {
     return type == LightType::Spotlight;
 }
 
-LightBuilder& LightBuilder::setCutoffAngle(float angle) {
+LightBuilder& LightBuilder::setCutoffAngle(float angleCosineValue) {
     if (this->type != LightType::Spotlight) {
         throw std::runtime_error("Cutoff angle can only be set for spotlight type");
     }
-    cutoffAngle = angle;
+    cutoffAngle = glm::acos(angleCosineValue);
     return *this;
 }
 

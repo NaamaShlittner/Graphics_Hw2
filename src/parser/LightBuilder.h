@@ -24,7 +24,7 @@ public:
     // Spotlight-specific properties
     LightBuilder &setPosition(const glm::vec3 &pos);
 
-    LightBuilder &setCutoffAngle(float angle);
+    LightBuilder &setCutoffAngle(float angleCosineValue);
 
     bool isSpotlight() const;
 

@@ -1,17 +1,22 @@
 #include "Plane.h"
 
-const float checkerboardScale = 0.55f; // size of each checker square
+const float checkerboardScale = 0.5f; // size of each checker square
 
 std::optional<Hit> Plane::intersect(const Ray &ray)
 {
-    glm::vec3 d0 = d - ray.origin;
     float denom = glm::dot(normal, ray.dir);
     if (glm::abs(denom) < 1e-6f)
     {
         // Ray is parallel to the plane
         return std::nullopt;
     }
-    float t = glm::dot(normal, d0) / denom;
+    
+    // Plane equation: normal · point + d = 0
+    // Ray equation: point = origin + t * dir
+    // Solve: normal · (origin + t * dir) + d = 0
+    // t = -(normal · origin + d) / (normal · dir)
+    float t = -(glm::dot(normal, ray.origin) + d) / denom;
+    
     if (t >= 0.0f)
     {
         Hit hit;
@@ -37,9 +42,9 @@ glm::vec3 Plane::ColorAtPoint(const glm::vec3& point)
     int checkV = static_cast<int>(floor(glm::dot(localPoint, v) / checkerboardScale));
 
     if ((checkU + checkV) % 2 == 0)
-        return color * glm::vec3(0.9f, 0.9f, 0.9f); // white
-    else
         return color * glm::vec3(0.5f, 0.5f, 0.5f); // black
+    else
+        return color * glm::vec3(0.9f, 0.9f, 0.9f); // white
 }
 
 Plane::Plane(const glm::vec3 &n, float dVal)
